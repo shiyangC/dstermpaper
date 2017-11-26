@@ -1,10 +1,93 @@
 \section{Introduction}
-Introduce these topics.
+This paper describe two approximate multidimension concensus algorithms in distributed system.
+These algorithms are different from traditional concensus algorithms.  They are meant to resolve
+the Byzantine problem which distributed system contains arbitrary failures. In traditional Byzantine
+problem: there are n processes in the system, several of them are faulty processes which can be
+considered generate any possible output in the system. Each non-faulty process will propose one
+value and then they will get one concensus value which need to meet several conditions:
+
 \begin{itemize}
-\item byzantine problem
-\item multiple byzantine problem
-\item following conditions
-\item approximate agreement
- 
+
+    \item Termination: Every correct process eventually delivers some message
+
+    \item Agreement: If a correct process delivers value m, then all correct processes deliver m
+
+    \item Nontriviality: Both values should be possible outcomes. This property eliminates the
+protocals that returns a fixed value independent of the initial input
 \end{itemize}
-\cite{mendes2015multidimensional}
+
+In multidimensional system, all the processes will propose one vector of values, and 
+all non-faulty processes will get concensus on the n-dimensional value.  The 
+multidimensional input which is d-dimensional vector can be considered as a point in
+d-dimensinal Euclidean space with $d > 0$. In the multidimentional Byzantine Concensus
+problem, the out come of each process should also be identical. And the output value
+need to be in the convex hull of the non-faulty processes' input in the d-dimensinal
+Euclidean space.
+
+To solve this problem, reasearchers also propose another problem named Byzantine
+Approximate Agreement problem. This problem also defined the out come of non-faulty
+processes will be in the convex hull. The outputs shold be within the Euclidean distance
+$\epsilon$ of each other.
+
+In these problem, the algorithms defined in a model include following property:
+
+\begin{itemize}
+
+    \item All message will be eventually delivered
+
+    \item Any two processes is connected to each other
+
+    \item The communication channel is FIFO channel
+
+    \item The processes can identify the sender by the sender ID in the message
+\end{itemize}
+
+From Vaidya and Garg's obversation, simply performing scalar consensus on
+each dimension of the input vectors independently does not solve the vector consensus problem.
+In particular, even if validity condition for scalar consensus is satisfied for each dimension of the
+vector separately, the above validity condition of vector consensus may not necessarily be satisfied.
+For instance, suppose that there are four processes, with one faulty process\cite{vaidya2013byzantine}.
+
+\subsection{Multidimensional Byzantine Concensus}
+
+For synchronous system, the algorithms will run in round by round. In each round, processes
+will send messages and receive messages which were sent in this round.
+
+A protocal solving the Multidimensional Byzantine Concensus problem need to satisfy following
+conditions\cite{mendes2015multidimensional}:
+
+\begin{itemize}
+    \item Agreement. The output vector at all the non-faulty processes must be identical.
+
+    \item Validity. The output vector at all non-faulty processes must be in the convex hull of
+the non-faulty inputs.
+
+    \item Termination. Each non-faulty process must terminate within a finite amount of time.
+
+\end{itemize}
+
+This is known that $n > 3f$ is necessary and sufficient to solve the scalar consensus, under the condition
+that the commnunication model is a complete graph. 
+
+
+\subsection{Multidimensional Byzantine Approximate Agreement}
+In asynchronous systems, the message deliver time is not guarenteed. The message may take unbound time
+to deliver. Also, there is not disjoint round in the algorithmes. It is not possible to identify a
+process is faulty or slow[attiya2004distributed]. And it is well-known that asynchronous scalar consensus
+is impossible in the presence of even a single crash failure\cite{fischer1985impossibility}. Here we
+discuss the algorithms are also under the same condition, but the input and output switched to a
+vector values.
+
+A protocol satisfying these conditions could be considered solving the Multidimensional Byzantine Approximate
+Agreement problem:
+
+\begin{itemize}
+    \item Agreement. The output vectors of non-faulty processes should be within Euclidean distance $\epsilon > 0$, a constant defined a priori. 
+
+    \item Validity. The output vector at all non-faulty processors must be inside the convex hull of the input inputs.
+
+    \item Termination. Each non-faulty process must terminate within a finite amount of time.
+
+\end{itemize}
+
+

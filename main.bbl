@@ -1,8 +1,19 @@
 \begin{thebibliography}{1}
 
+\bibitem{fischer1985impossibility}
+M.~J. Fischer, N.~A. Lynch, and M.~S. Paterson.
+\newblock Impossibility of distributed consensus with one faulty process.
+\newblock {\em Journal of the ACM (JACM)}, 32(2):374--382, 1985.
+
 \bibitem{mendes2015multidimensional}
 H.~Mendes, M.~Herlihy, N.~Vaidya, and V.~K. Garg.
 \newblock Multidimensional agreement in byzantine systems.
 \newblock {\em Distributed Computing}, 28(6):423--441, 2015.
+
+\bibitem{vaidya2013byzantine}
+N.~H. Vaidya and V.~K. Garg.
+\newblock Byzantine vector consensus in complete graphs.
+\newblock In {\em Proceedings of the 2013 ACM symposium on Principles of
+  distributed computing}, pages 65--73. ACM, 2013.
 
 \end{thebibliography}

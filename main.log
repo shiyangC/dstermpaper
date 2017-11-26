@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.8.31)  26 NOV 2017 11:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.8.31)  26 NOV 2017 13:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -326,15 +326,24 @@ Package caption Info: End \AtBeginDocument code.
 
 (./abstract.tex) (./intro.tex
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 4.
+(Font)              <7> on input line 10.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 4.
+(Font)              <5> on input line 10.
 
 
-LaTeX Warning: Citation `mendes2015multidimensional' on page 1 undefined on inp
-ut line 10.
+LaTeX Warning: Citation `fischer1985impossibility' on page 1 undefined on input
+ line 77.
 
-) (./async_comm_prim.tex) (./safe_area.tex) (./suff_cond_multid.tex)
+
+Underfull \hbox (badness 1968) in paragraph at lines 74--80
+\OT1/ptm/m/n/10 de-liver. Also, there is not dis-joint round in the al-go-
+ []
+
+) (./async_comm_prim.tex) (./safe_area.tex [1{/usr/local/texlive/2014/texmf-var
+/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]) (./suff_cond_multid.tex)
 (./comparison.tex) (./conclude.tex) (./main.bbl)
 
 ** Conference Paper **
@@ -347,12 +356,9 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+[2
 
-
-
-]
-(./main.aux)
+] (./main.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -361,23 +367,25 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 5099 strings out of 493117
- 81517 string characters out of 6135433
- 237431 words of memory out of 5000000
- 8510 multiletter control sequences out of 15000+600000
+ 5101 strings out of 493117
+ 81564 string characters out of 6135433
+ 241437 words of memory out of 5000000
+ 8512 multiletter control sequences out of 15000+600000
  35250 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,7n,38p,235b,230s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/tex
-live/2014/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/
-texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dis
-t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
-pe1/urw/times/utmri8a.pfb>
-Output written on main.pdf (1 page, 53831 bytes).
+exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texliv
+e/2014/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/tex
+mf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/f
+onts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1
+/urw/times/utmri8a.pfb>
+Output written on main.pdf (2 pages, 76252 bytes).
 PDF statistics:
- 29 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 40 PDF objects out of 1000 (max. 8388607)
+ 28 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
