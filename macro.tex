@@ -1,0 +1,32 @@
+\usepackage{cite}
+\usepackage{color}
+
+\lstset{
+  basicstyle=\small\sffamily,
+  columns=fullflexible,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  mathescape=true,
+  escapechar=\%,
+  belowskip=-2ex,
+}
+%\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=4pt, language=Java,showstringspaces=false,xleftmargin=10pt,linewidth=8cm}
+\lstset{language=Java,showstringspaces=false}
+\definecolor{mygray}{rgb}{0.95,0.95,0.95}
+\definecolor{darkgreen}{rgb}{0,.45,0}
+\lstset{keywordstyle=\color{red}\emph}
+ %\bfseries       
+\lstset{
+ morekeywords={malloc, free}
+}                                                                                            
+\lstset{commentstyle=\color{darkgreen}}
+
+
+\newcommand{\finding}[1]{\noindent
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape{#1}}}}
+
+\newcommand{\Comment}[1]{}
+\newcommand{\lingming}[1]{[{\color{red} #1}]}
+\newcommand{\shiyang}[1]{[{\color{blue} #1}]}
+\newcommand{\yafeng}[1]{[{\color{green} #1}]}

@@ -1,0 +1,912 @@
+%\begin{figure}[t]
+%\center
+%\includegraphics[width=3.5in]{plots/pict1}
+%\caption{\label{fig:loc}SLOC of Subjects}
+%\end{figure}
+\setlength{\textfloatsep}{1pt plus 1.0pt minus 2.0pt}
+\section{Results and Analysis}
+In this section, we present the detailed results and analysis for our empirical study.
+
+\begin{figure*}[t]
+\center
+\subfloat[Assertion number]{\includegraphics[width=2in]{plots/assertion_subject}
+\label{fig:num_assert}}
+\subfloat[Assertion number per SLOC]{\includegraphics[width=2in]{plots/assertionSLOC_subject}
+\label{fig:ratio_assert}}
+\subfloat[Assertion number per Test]{\includegraphics[width=2in]{plots/assertionTest_subject}\label{fig:assert_test}}
+\caption{Assertion statistics for each project}
+\end{figure*}
+
+
+\subsection{RQ1: Assertion Usage in Practice}
+%\lingming{We need five figs here: (1) x-axis represents projects and
+%  y-axis represents number of assertions for each project, (2) x-axis
+%  represents projects and y-axis represents $\frac{\#
+%    assertions}{SLoC}$ for each project, (3) x-axis represents
+%  projects and y-axis represents $\frac{\# assertions}{\# tests}$ for
+%  each project, (4) x-axis represents the number of assertions and
+%  y-axis represents the number of tests (from all projects) have that
+%  number of assertions (i.e., the current fig. 3), and (5) x-axis
+%  represents the ratio of the number of assertions to the covered LoC
+%  for each test and the y-axis represents the number f tests have that
+%  ratio (i.e., the current fig. 4). Please put first three figures in
+%  a row, and the remaining 2 in a row. }
+
+In this research question, we investigate the adoption of assertions
+in real-world Java projects. We collect the number of assertions as
+well as the assertion density in each project. Furthermore, we also
+investigate the assertion usage for each test.
+
+
+Figure~\ref{fig:num_assert} shows the total number of assertions for
+each project. In the figure, the {\em x-axis} denotes subject IDs for
+all the studied projects and the {\em y-axis} denotes number of
+assertions for each project. Note that all the projects are ranked
+according to their SLOC in the {\em x-axis}.  From the figure, we
+found that 74 out of 124 (60\%) projects contain assertions less than
+100. Some large open source Java projects contain more than 1,000
+assertions, such as {\tt commons-io} and {\tt la4j}.  There are also some
+Java projects that only check the exception and do not use JUnit
+assertions. For example, {\tt spr-mvc-hib} use {\tt
+org.springframework.test.web.servlet.MockMvc} to perform a server-side
+Spring MVC test, and test classes in this project use {\tt andExpect}
+method to check the test oracle, which is similar as JUnit
+Assertion. Furthermore, larger projects tend to have larger number of
+assertions. \Comment{The reason is that people tend to write more
+tests for larger projects.}
+
+Since different projects have different sizes, we further investigate
+the assertion density for each project (i.e., the ratio of the number
+of assertions to the number of SLOC). Figure~\ref{fig:ratio_assert}
+shows the number of assertions per SLOC of each project. In the
+figure,the {\em x-axis} denotes different projects while the {y-axis}
+denotes the number of assertions per SLOC. From this figure we can
+found that most Java projects have the value less than 0.1, which
+indicates that in most projects the number of assertion statements is
+less than 10\% of the number of source code statements. The highest
+assertion density can be even more than 0.6, which comes from {\tt
+exp4j}. Furthermore, the assertion density tend to be irrelevant to
+project sizes. For example, several projects with high SLOC get low
+number of assertion to SLOC ratio, while the projects with low SLOC
+may get moderate to high ratio. \Comment{This figure implies that not only
+large Java projects use more assertion per source line of code, but
+small projects can also achieve an average or even higher level of
+assertion usage rate.}
+
+We further investigate the assertion usage for each test of each
+project, we present the average number of assertions per test for each
+project in Figure~\ref{fig:assert_test}. In the figure, the {x-axis}
+presents all the studied projects, and the {y-axis} presents the
+average number of assertions for each test. From the figure, we found
+that about 25\% Java projects contain less than one assertion per test
+case, 63 out of 124 projects contain less than 2 assertions per test
+case, and 82\% Java projects contain less than 4 assertions per test
+case.  Furthermore, projects of different sizes tend to have the same
+distribution in terms of the average number of assertions for each
+test, demonstrating that projects of various sizes tend to use
+assertion to the similar extent for each test. 
+
+
+\begin{figure}[t]
+\center
+\includegraphics[width=3in]{plots/assertionTest_histo}
+\caption{\label{fig:assert_case_histo}Test assertion number histogram}
+\end{figure}
+
+\begin{comment}
+\begin{figure}[t]
+\center
+\includegraphics[width=3in]{plots/assertionSLOC_histo}
+\caption{\label{fig:assert_sloc_histo}Assertion per SLOC Histogram}
+\end{figure}
+\end{comment}
+
+
+To further investigate the assertion usage for each test, we analyze
+all the tests from all the projects
+together. Figure~\ref{fig:assert_case_histo} plots the histogram of
+the number of assertions in each test. In the figure, the {\em x-axis}
+denotes the number of assertions in each test case, while the {\em
+y-axis} denotes the number of test cases with the corresponding number
+of assertion. Note that among all the 11,245 test cases in 124
+projects, 1,987 test cases do not contain any assertion. For example,
+when the developers expect a specific exception to be thrown, they
+will use statement such as {\tt
+expected=IndexOutOfBoundsException.class} to construct the test case
+without assertion. From the figure, we found that 90.9\% test cases
+contain 0 to 5 assertions. There are are 0.4\% test cases contain more
+than 25 assertions. The most
+frequent case is one assertion in each test case, which is 44.0\%. 
+This finding indicates that in practice, a relatively
+small number of assertions (e.g., $\le$5) for each JUnit test can be
+sufficient for the majority of cases.
+
+\Comment{Figure~\ref{fig:assert_sloc_histo} shows the ratio between
+the number of assertions and number of statements covered by
+corresponding test case. This figure normalize the difference of the
+covered lines between each test cases. 93.0\% test cases contain
+assertion per covered statement are less or equals 0.10. This means
+for most Java projects one assertion is related to less than 10 lines
+of code.}
+
+
+
+\noindent
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape{\bf%
+Finding 1:} The results suggest that larger projects tend to have
+larger number of assertions. However, the assertion density can be
+similar for projects of various sizes. Furthermore, more than 90\% test
+cases contain 0-5 assertions, and 44.0\% tests only contain 1 assertion.}}
+
+\subsection{RQ2: Assertion Fault Detection Capability}
+A program fault can usually be detected in two ways, either catched by
+assertion failures, or program exceptions (causing program to
+crash). Therefore, to answer this reseach question, we investigate the
+overall ratio of killed mutants, as well as the detailed ratio of
+mutants killed by assertions and exceptions. Furthermore, we also analyze
+the number fault detection capability of each type of assertions on
+each type of faults.
+
+
+\begin{figure}[t!]
+\center
+\includegraphics[width=3.5in]{plots/kill_ratio_all}
+\caption{\label{fig:detect_amutant}Killing ratio of all mutants for each project}
+\end{figure}
+
+
+\begin{figure}[t!]
+\center
+\includegraphics[width=3.5in]{plots/kill_ratio}
+\caption{\label{fig:detect_cmutant}Killing ratio of mutants executed by tests for each project}
+\end{figure}
+
+We first present the ratio of killed mutants to all mutants of each
+project. Figure~\ref{fig:detect_amutant} shows all three types of
+killing ratio, i.e., the killing ratio by assertion, exception, and
+using both of them. In the figure, the {\em x-axis} presents all
+the projects in the ascending order of SLOC, while the {\em y-axis}
+denotes the corresponding mutant killing ratio.  The green line
+denotes the ratio of mutants killed by assertion, the blue line
+denotes the ratio of mutants killed by exception, and the red line
+denotes the ratio of mutants killed by using both assertion and
+exception. From the figure, we found that green line is below the blue
+line for the vast majority of the cases, indicating that the ratio of
+mutants killed by assertion is usually lower than the ratio of mutants
+killed by exception. We can also found that there are mutants that can
+be killed by both assertion and exception, making the overall mutant
+killing ratio lower than the sum of mutant killing ratio by assertion
+and mutant killing ratio by exception. On average for all our studied
+projects, 16.5\% mutants are killed by assertion, 29.7\% mutants are
+killed by exception, and 39.5\% mutants are killed by using both
+assertion and exception. 
+
+There are mutants that are actually not executed by any
+test. Therefore, the mutant killing ratio to all mutants may not be
+accurate in evaluating the fault-detection capabilities of
+assertions. To further investigate the assertion fault detection
+capability, we further present the mutant killing ratio to all
+executed mutants.  Figure~\ref{fig:detect_cmutant} shows the similar
+results as Figure~\ref{fig:detect_amutant}, except that the ratio is
+number of killed mutants to executed mutants.  From this figure, we
+can find that the mutant killing ratios have similar distributions on
+projects of various sizes. Among all the 124 Java projects, the
+majority of them have overall killing ratio of higher than
+50\%. However, assertions alone can kill more than 50\% mutants for
+only 16 out of the 124 projects (12.9\%). The ratio of mutants killed
+by exceptions is higher than the ratio of mutants killed by
+assertions, and is higher than 50\% for almost half of the projects.
+On average, for the mutants executed by tests, the ratio of mutants
+killed by assertion is 29.1\%; the ratio of mutants killed by
+exception is 53.1\%; the ratio of mutants killed by assertion and
+exception is 71.9\%.
+
+\begin{comment}
+ Some large projects have very small
+kill ratio.  That implies a lot of mutants are covered, and this
+phenomenon is much more common in large projects than small projects,
+as the same finding in the Figure~\ref{fig:assert_test}. Projects
+which contain large SLOC kill less mutants indicates that low ratio of
+assertion per test case.
+
+  The top line denotes the ratio of mutants killed
+by assertion and exception.
+\end{comment}
+
+
+
+\noindent
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape{\bf%
+Finding 2:} The ratio of mutants detected by assertions has the
+similar distribution for projects of various sizes. On average,
+assertions are able to detect 16.5\% and 29.1\% mutation faults for
+all and executed mutants, respectively. Furthermore, exceptions can
+catch more faults than assertions, i.e., killing 29.7\% and 53.1\% of
+all mutants and executed mutants, respectively.}}
+
+%\lingming{First, use the existing Fig. 10 to show the number of each
+%  type of faults detected by each type of assertions. However, the
+%  results can be biased for widely used assertions and faults with
+%  largest number. Therefore, second, for each assertion, we compute
+%  the ratio of each type of faults detected by it to the number of the
+%  corresponding type of faults. Then, for each type of assertions, we
+%  use the average results of the assertions of that type to draw
+%  either the bubble chart or simply a table.}
+\input{t1}
+
+Since different assertion types and different fault types may both
+impact the fault detection capabilities of assertions. Therefore, we
+further present the detailed mutant killing results by each type of
+assertion for each type of mutation fault in
+Table~\ref{table:t_1}. In the table, each row represents a
+mutation fault type (identified by the corresponding mutation
+operator), each column represents an assertion type, and then each
+cell presents the number (and ratio) of certain type of mutation
+faults detected by the corresponding type of assertion. From the
+table, we can make the following observations:
+
+{\tt AssertEquals}, {\tt AssertThat}, {\tt AssertTrue} and {\tt
+AssertFalse} are the most widely used assertions, and can kill the
+most faults. {\tt AssertEquals} kills more than 39\% for all types of
+faults, and kills more faults than all the other assertion types.  The
+reason is that from developers' perspective, {\tt AssertEquals} is the
+most commonly used assertion type, because most of the tests compare
+the expected results with the actual results.  {\tt AssertThat} uses
+Java matcher to apply regular expression between the actual outputs
+and expected outputs.  Because this assertion type uses regular
+expression, it has the most powerful check capability for checking
+strings, while string is one of the most widely used form for program
+outputs. Therefore, this assertion type has high fault detection
+capability. {\tt AssertTrue} is the third widely used assertion type,
+and it is used to check any predicate expressions in source code. {\tt
+AssertFalse} has the similar function as {\tt AssertTrue} except that
+it check whether the predicate is false. Both {\tt AssertTrue} and
+{\tt AssertFalse} are widely used to check predicate outcomes that can
+also detect a large ratio of faults.
+
+Furthermore, different types of assertions seem to be good at detecting
+different types of faults. We analyze the top 4 widely used assertions
+in detail as follows.
+
+\noindent {\em AssertEquals:} The top three types of faults detected by {\tt AssertEquals}
+are {\tt Invert Negatives Mutator} (75.79\%), {\tt Math Mutator}
+(73.12\%), and {\tt Remove Increment Mutator} (72.98\%). These
+mutators directly affect the mathematical computation, making the
+mutant killing ratio of {\tt AssertEquals} higher than 70\%.  {\tt
+AssertEquals} kills the least mutants generated from {\tt Constructor
+Call Mutator}, because this mutator is the most indirectly affect with
+data computation.  Therefore, {\tt AssertEquals} is the most powerful
+and widely used assertion for mathematical computation faults.
+
+\noindent {\em AssertThat:} The top three
+types of faults that it can kill are {\tt Non-Void Method Call
+Mutator} (36.49\%), {\tt Negate Conditionals Mutator} (35.70\%) and
+{\tt Switch Mutator} (34.82\%). {\tt Non-Void Method Call Mutator} is
+used to remove method call and replace the return value with
+predefined values according to the return type. {\tt Switch Mutator}
+is used to change the switch labels, for example it can change the
+first label into the default label, and change the default label into
+the firt label. {\tt Negate Conditionals Mutator} can negate the
+conditional predicate for the program under test, such as replacing
+``{\tt x==y}'' with ``{\tt x!=y}''. We found that all the three fault
+types tend to change the execution flow of the program under
+test. Therefore, {\tt AssertThat} tend to be more sensitive for the
+faults that change the execution flow of the program under test.
+
+\noindent {\em AssertTrue/AssertFalse:} Since {\tt AssertTrue} and {\tt AssertFalse} are used in similar
+cases, they are analyzed together here. The top three fault types that
+they can kill are {\tt Invert Negatives Mutator}, {\tt Return Value
+Mutator} and {\tt Math Mutator}.  {\tt AssertTrue} and {\tt
+AssertFalse} are more inclined to detect these fault types, because
+these types pf faults directly change the computation processes, which
+may further affect following the predicate. \Comment{But these mutators are not
+very powerful and can be directly affected by the computation, the
+fault detection ratio is much smaller than {\tt AssertEquals}.}
+
+\noindent
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape{\bf%
+Finding 3:} The experimental results show that {\tt AssertEquals},
+{\tt AssertThat}, and {\tt AssertTrue/AssertFalse} can kill the most
+faults in practice. Furthermore, specific types of assertions are more sensitive to
+detect specific types of faults. }}
+
+\subsection{RQ3: Impacts of Assertion Quantity on Fault Detection}
+
+%\lingming{Two figures: (1) x-axis represents the number of assertions
+%  for each project and y-axis represents the number of mutants killed
+%  (i.e., current Fig. 9), (2) x-axis represents the number of
+%  assertions for each project and y-axis represents the ratio of the
+%  number of killed mutants to the number of mutants executed by the
+%  tests. (close to Figure 7, but the ratio is computed as
+%  the number of killed mutants to executed mutants rather than
+%  executed lines)}
+
+In this research question, we investigate the impacts of assertion
+number on the fault detection rates. At the project level, we want to
+study whether projects with more assertions tend to have higher fault
+detection rates. At the test level, we want to study whether
+individual tests with more assertions tend to have higher fault
+detection rates on the faults executed by the tests. 
+
+
+\Comment{This research question includes two parts: first, the relationship
+between test suite effectiveness and the number of assertions at
+project level; second, the relationship between test effectiveness and
+the number of assertions at test case level.}
+
+\subsubsection{Impacts of Assertion Number at the Project Level}
+Figure~\ref{fig:killRatio_assertion} shows the relationship between
+the ratio of killed mutants and the number of assertions at the
+project level. In the figure, the {\em x-axis} denotes the number of
+assertions within each project, the {\em y-axis} denotes the fault
+detection rate (using both assertion and exception). From this figure,
+we can find that as the number of assertions in a project increases,
+the fault detection rate also increases, indicating a positive
+correlation. However, it seems that the increase rate slows down for
+projects with more assertions. To further understand the correlation
+between the number of assertions and the fault detection rates at the
+project level, we performed linear regression to find the most
+suitable model for the correlation. Before the regression, following
+common statistics practice, we perform independent variable
+transformation based on both linear and logarithmic operations. The
+most suitable log regression model is shown in blue line in
+Figure~\ref{fig:killRatio_assertion}.
+We further perform Pearson's $r$ correlation analysis
+for both regressions.  Table~\ref{table:t_cor_ass_ratio} shows the
+correlation scores.  This Pearson's $r$ analysis shows that the
+correlation is much more likely to be logarithmic ($r$=0.259) rather
+than linear ($r$=0.105). In addition, the $p$ value indicates that the
+logarithmic correlation between assertion number and fault detection
+rates at the project level is statistically significant at the 0.05
+level. Note that this finding is consistent with Zhang et al.'s work
+using small number of subjects~\cite{zhang2015assertions}.
+
+Since Kendall's $\tau$ analysis can compute the concordancy of
+independent and dependent variables, for any two projects $p_1$ and
+$p_2$, it can check whether the fault detection rate of $p_1$ is
+higher than that of $p_2$ given that the assertion number of $p_1$ is
+higher than that of $p_2$. In other words, Kendall's $\tau$ can check
+whether we can use assertion number to predict the relative relation
+between fault detection rates of two projects (i.e., to compare two
+projects' fault detection rates). The Kendall's $\tau$ correlation
+coefficient is 0.115, much lower than that of our Pearson's
+$r$. Furthermore, the $p$ value for Kendall's $r$ is 0.593, indicating
+that the correlation is not statistically significant, i.e.,
+assertion number cannot be used to compare the fault detection rates
+of different projects.
+
+\finding{{\bf Finding4:} At the project level, our results confirm prior work on small number of subjects~\cite{zhang2015assertions} 
+that assertion number has statistically significant logarithmic
+correlation with fault detection rates. However, our results on large
+number of real-world projects further show that assertion number
+cannot be used to compare the fault detection rates of different
+projects.}
+
+
+\Comment{is the same with the finding in Yucheng's
+study\cite{zhang2015assertions}, but we use a large set of real-world
+Java projects, so we are more confidence about this
+finding. Table~\ref{table:t_cor_ass_kill} shows the correlation score
+of the two values.}
+
+
+\Comment{Despite the affection of the total number of mutants generated by
+mutation tool, the Y-axis of Figure~\ref{fig:killRatio_assertion} 
+denotes ratio of the number of killed mutants to the number of executed mutants.
+From this figure, it is obvious that
+the ratio is positive correlated with number of assertions in project
+level. So the result suggests that more assertions a project suite contains
+the more effectiveness the test suite of the project will be.}
+
+\begin{comment}
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Killed Mutants Correlation Project Level Correlation}
+\label{table:t_cor_ass_kill}
+\centering
+\begin{tabular}
+{rrrrrr}
+\Xhline{2\arrayrulewidth}
+Type & Pearson & p-value & Kendall & p-value  \\
+\hline
+Linear & 0.796 & \textless 2.2e-16 & 0.628 & \textless 2.2e-16 \\
+Log & 0.641 & \textless 1.11e-15 &  0.628 & \textless 2.2e-16\\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+\end{comment}
+
+
+\begin{comment}
+\begin{figure}[t]
+\center
+\includegraphics[width=3.5in]{plots/killed_assertion}
+\caption{\label{fig:killed_project}Killed Mutants and Assertions of Project}
+\end{figure}
+\end{comment}
+
+\begin{figure*}[t]
+\center
+\subfloat[Project level]{\includegraphics[width=3in]{plots/killedRatio_assertion}
+\label{fig:killRatio_assertion}}
+\subfloat[Test level]{\includegraphics[width=3in]{plots/killedRatio_assertion_test}
+\label{fig:killRatio_assertion_test}}
+\caption{Impacts of assertion number on fault detection rates}
+\end{figure*}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Correlation between assertion number and overall fault detection rate at the project evel}
+\label{table:t_cor_ass_ratio}
+\centering
+\begin{tabular}
+{rrrrr}
+\Xhline{2\arrayrulewidth}
+Type & Pearson & p-value & Kendall & p-value\\
+\hline
+Linear & 0.105 & 0.2468 & 0.115 & 0.593\\
+Log & 0.259 & 0.003712 & 0.115 & 0.593\\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+
+
+%\lingming{Two figures: (1) x-axis represents the number of assertions
+%  for each test and y-axis represents the number of mutants killed
+%  (i.e., current Fig. 6), (2) x-axis represents the number of
+%  assertions for each test and y-axis represents the ratio of the
+%  number of killed mutants to the number of mutants executed by that
+%  corresponding test. (close to Figure 7, but the ratio is computed as
+%  the number of killed mutants to executed mutants rather than
+%  executed lines)}
+\begin{comment}
+\begin{figure}[t]
+\center
+\includegraphics[width=3.5in]{plots/killed_assertion_test}
+\caption{\label{fig:killed_assertion_test}Killed Mutants and Assertions of Test}
+\end{figure}
+\end{comment}
+
+\subsubsection{Impacts of Assertion Number at the Test Level}
+
+
+\Comment{Figure~\ref{fig:killed_assertion_test} shows the relationship between
+the number of killed mutants and the number of assertions in a test
+case. X-axis denotes the number of assertions one test contains.
+Y-axis denotes the number of killed
+mutants. Table~\ref{table:t_cor_ass_test} shows the correlation score
+between them. The result indicates that a test case with more
+assertions tends to kill more mutants. But for most real-world Java
+projects, developers usually use at most 5 assertions. We will analyze
+the test oracle adequacy in RQ4.}
+
+\begin{comment}
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Killed Mutation Correlation Test Level}
+\label{table:t_cor_ass_test}
+\centering
+\begin{tabular}
+{rrrrrr}
+\Xhline{2\arrayrulewidth}
+Type & Pearson & p-value & Kendall & p-value\\
+\hline
+Liner & 0.281 & \textless 2.2e-16 & 0.310 & \textless 2.2e-16\\
+Log & 0.349 & \textless 2.2e-16 & 0.310 & \textless 2.2e-16\\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+\end{comment}
+
+\Comment{Figure~\ref{fig:killRatio_assertion_test} gives more specific results
+of the test effectiveness and the number of assertions in a test case,
+but it eliminated the affection of the different mutants size that the
+mutantion tools generated. The difference of this figure is that here
+Y-axis is number of killed mutants / number of executed mutants. It
+means the more assertions one test contains the more ratio of mutants
+the test case will kill.}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Correlation between assertion number and overall fault detection rate at the test level}
+\label{table:t_cor_ass_test}
+\centering
+\begin{tabular}
+{rrrrr}
+\Xhline{2\arrayrulewidth}
+Type & Pearson & p-value & Kendall & p-value\\
+\hline
+Linear & 0.144  & \textless 2.2e-16 & 0.174& \textless 2.2e-16\\
+Log & 0.245 & \textless 2.2e-16     & 0.174& \textless 2.2e-16\\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+
+
+Figure~\ref{fig:killRatio_assertion_test} presents the relationship
+between the fault detection rate and the number of assertions at the
+test level. Note that the fault detection rate at the test level is
+computed as the ratio of the number of killed mutants detected by each
+test to the number of mutants executed by that test. In the figure,
+the {x-axis} denotes the number of assertions within each test, the
+{y-axis} denotes the fault detection rate, and each data point denotes
+a test. In total, we analyzed all the 11,246 tests in the 124 studied
+projects. Similar with the project-level
+results, there also seems to be a positive correlation between the
+number of assertions and fault detection rates. Pearson's $r$
+analysis, shown in Table~\ref{table:t_cor_ass_test}, confirms our
+finding that assertion quantity also tend to have a positive
+logarithmic correlation ($r$=0.245) with fault detection rates. In
+addition, the $p$ value (<2.2$e^{-16}$) also confirms that the
+correlation is statistically significant at the 0.05 level.
+
+We further perform the Kendall's $\tau$ analysis to measure the rank
+correlation. Different from our findings at the project level, the
+Kendall's $\tau$ rank correlation coefficient is positive
+($\tau$=0.174) and statistically significant ($p$<2.2$e^{-16}$). This
+finding indicates that at the test level, assertion number could be
+used as a measurement to compare the test effectiveness in fault
+detection. In addition, we can find that when adding more than 10
+assertions to a test, the effectiveness of the test may grow
+slowly. Given the cost of adding assertions, we suggest that it may
+not be practical to include more than 10 assertions in each test.
+
+
+\finding{{\bf%
+Finding 5:} At the individual test level, the assertion quantity also
+has statistically significant logarithmic correlation with fault
+detection rates. Also, the assertion quantity may also be used to
+compare the effectiveness of different tests. Furthermore, our results
+suggest that it may not be practical to include more than 10
+assertions in each test. }
+
+\subsection{RQ4: Impacts of Assertion Coverage on Fault Detection}
+
+%\begin{figure}[t]
+%\center
+%\includegraphics[width=3.5in]{plots/slice_project}
+%\caption{\label{fig:withnew-trad}Code Coverage and Assertion Coverage in Project Level}
+%\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width=3in]{plots/slice_project_scatter}
+\caption{\label{fig:assert_cover_proj}Correlation between assertion coverage and overall fault detection rate at the project level}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width=3in]{plots/slice_method_scatter}
+\caption{\label{fig:assert_cover_test}Correlation between assertion coverage and overall fault detection rate at the test level}
+\end{figure}
+
+\begin{figure}
+\center
+\includegraphics[width=3in]{plots/slice_assert_scatter}
+\caption{\label{fig:assert_cover_assert}Correlation between assertion coverage and overall fault detection rate at the assertion level}
+\end{figure}
+
+%\lingming{Draw one figure, the x-axis represents the different
+%  projects while the y-axis represents the different coverage
+%  information. Use two lines in different colors to represent the
+%  statement coverage for each project, and the assertion coverage for
+%  each project (i.e., the ratio of statements checked by assertions to
+%  all statements).}
+
+Assertion coverage gives the which statements can actually affect the
+assertion outcome. This will give us a fine-grained way to measure the
+assertion quality.  Therefore, in this section, we investigate the
+impacts of assertion coverage on the fault detection rates at various
+levels, i.e., the project, test, and assertion levels. Note that the
+JavaSlicer tool we used cannot be applied to all the Java projects due
+to the following reasons: (1) abortion of test execution
+tracing by thrown unexpected exceptions, (2) extremely huge trace
+files (e.g., >500M) that that can cause hours or days to perform
+slicing on a single test, and (3) empty slicing outcome. After
+filering the unusable projects, we have JavaSlicer successfully
+applied to 72 out of our 124 projects, and all our results in this
+section are based on that 72 projects. 
+
+\Comment{The reason is that , but not all open source
+Java projects can be directly applied to JavaSlicer. Because sometimes
+JavaSlicer cannot trace all the test cases.  For the convinence, we
+ignore the tracing files that are large than 500 MB.  We select the
+projects if 80\% its test cases can be traced by JavaSlicer.  After
+this process, we selected 72 projects and got their assertion
+coverage.}
+
+\subsubsection{Impacts of Assertion Coverage at the Project Level}
+
+Figure~\ref{fig:assert_cover_proj} shows the correlation between
+assertion coverage and fault detection rate at the project level. From
+the figure, we can find that assertion coverage tends to have positive
+correlation with fault detection rate. The Pearson's $r$ analysis
+confirms the finding that assertion coverage has positive correlation
+with fault-detection rate for both linear ($r$=0.309) and logarithmic
+($r$=0.313) transformation. Furthermore, the
+$p$ value demonstrate that the correlation is statistically
+significant at the 0.05 level. Similar with the correlation between
+assertion quantity and fault-detection rate, the logarithmic
+correlation is slightly stronger.
+
+We further perform the Kendall's $\tau$ analysis to measure the rank
+correlation. Different from our findings for the impacts of assertion
+quantity, the Kendall's $\tau$ rank correlation coefficient is
+positive ($\tau$=0.207) and statistically significant
+($p$=0.009). This finding indicate that although assertion quantity
+cannot be used to compare the fault detection capabilities of
+different project, assertion coverage can be a better measurement.
+
+\Comment{ relationship of killed mutants and its assertion
+coverage. The correlation score between them is 0.308, which suggests
+that they are weakly positive correlated.  This figure also indicates
+that the higher assertion coverage of a test suite the more mutants
+killed effectiveness the test suite will be.}
+
+\finding{{\bf Finding 6:} At the project level, assertion coverage has 
+statistically significant logarithmic correlation with fault detection
+rates. In addition, different from assertion quantity, assertion
+coverage can be a better measurement when comparing fault detection
+rates of different projects.}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Correlation between assertion coverage and overall fault detection rates at the project level}
+\label{table:t_cor_ass_test}
+\centering
+\begin{tabular}
+{rrrrr}
+\Xhline{2\arrayrulewidth}
+Type & Pearson & p-value & Kendall & p-value\\
+\hline
+Linear & 0.309 & 0.008 &0.207 & 0.009\\
+Log & 0.313    & 0.007 &0.207 & 0.009\\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+
+\Comment{In Figure~\ref{fig:assert_cover_test}, X-axis denotes assertion coverage and Y-axis denotes
+mutants killed ratio. This figure also means that in the test case level, with
+the increase of the assertion coverage, the test effectiveness also increase.
+In other hand, there are a lot of test cases that do not contain any assertion,
+and their mutation killed ratio ranges from 0 to 1.0, which suggests that the
+exception also play an important role in killing mutants.}
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Correlation between assertion coverage and overall fault detection rate at the test level}
+\label{table:t_cor_ass_test}
+\centering
+\begin{tabular}
+{rrrrr}
+\Xhline{2\arrayrulewidth}
+Type & Pearson & p-value & Kendall & p-value\\
+\hline
+Linear & 0.367 & \textless 2.2e-16 &0.260 & \textless 2.2e-16 \\
+Log & 0.377 & \textless 2.2e-16    &0.260 & \textless 2.2e-16 \\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+
+\subsubsection{Impacts of Assertion Coverage at the Test Level}
+
+
+Figure~\ref{fig:assert_cover_test} shows the scatter plots for the
+fault detection rate and assertion coverage of each test. Note that at
+the test level, the assertion coverage is computed as the number of
+executed statements that are checked by the assertions to the number
+of all statements executed by the test; the fault detection rate is
+the number of faults detected by the test to the number of faults
+executed by the test. From the figure, we can find that there is a
+positive correlation between assertion coverage and fault detection
+rate at the test level. Pearson's $r$ analysis in
+Table~\ref{table:t_cor_ass_test} shows that the linear and logarithmic
+correlation are both positive ($r$>0.3) and statistically significant
+($p$<2.2$e^{-16}$). Also, the logarithmic correlation seems stronger.
+
+We further perform the Kendall's $\tau$ analysis to measure the rank
+correlation. The resulting $\tau$ value of 0.260 demonstrates that the
+rank correlation is positive and statistically significant
+($p$<2.2$e^{-16}$). This finding demonstrates that at the test level,
+assertion coverage ($\tau$=0.260) can be a better measurement than
+assertion quantity ($\tau$=0.174) when comparing the effectiveness of
+different individual tests.
+
+\finding{{\bf Finding7:} At the test level, assertion coverage has significant
+ logarithmic correlation with fault detection rates. In addition,
+ assertion coverage can be used as a better measurement than assertion
+ quantity in comparing effectiveness of different individual tests.}
+
+
+\subsubsection{Impacts of Assertion Coverage at the Assertion Level}
+
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Correlation between assertion coverage and fault detection rate at the assertion level}
+\label{table:t_cor_ass_test}
+\centering
+\begin{tabular}
+{rrrrr}
+\Xhline{2\arrayrulewidth}
+Type & Pearson & p-value &Kendall & p-value\\
+\hline
+Linear & -0.067& 7.569e-13 & 0.0128 & 0.040\\
+Log & -0.042& 5.924e-06    & 0.0128 & 0.040\\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\renewcommand{\arraystretch}{1.3}
+\tiny
+\caption{Assertion coverage and mutant killing}
+\label{table:t_3}
+\centering \begin{tabular}
+{r|r|r|r}
+\Xhline{2\arrayrulewidth}
+ID & Assertions & Assertion Coverage & Killing Ratio\\
+\Xhline{2\arrayrulewidth}
+1&testIndexOfExtension:534&0.138&0.214\\
+2&testIndexOfExtension:535&0.138&0.214\\
+\hline
+3&testIndexOfExtension:533&0.138&0.071\\
+4&testIndexOfExtension:536&0.138&0.095\\
+5&testIndexOfExtension:537&0.138&0.071\\
+\Xhline{2\arrayrulewidth}
+\end{tabular}
+\end{table}
+
+\begin{figure}
+\begin{lstlisting}
+    public void testIndexOfExtension() {
+533  assertEquals(-1, FilenameUtils.indexOfExtension("file"));
+534  assertEquals(4, FilenameUtils.indexOfExtension("file.txt"));
+535  assertEquals(13, FilenameUtils.indexOfExtension("a.txt/b.txt/c.txt"));
+536  assertEquals(-1, FilenameUtils.indexOfExtension("a/b/c"));
+537  assertEquals(-1, FilenameUtils.indexOfExtension("a\\b\\c"));
+    }
+	// Find the index of the '.' in the filename.
+    public static int indexOfExtension(final String filename) {
+724  if (filename == null) {
+725    return NOT_FOUND;
+726  }
+	 // Find the index of the last '.' 
+727  final int extensionPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
+	 // Find the index of last file seperator
+728  final int lastSeparator = indexOfLastSeparator(filename);
+	 // Return the index of last '.', if the '.' is after seperator
+	 // else return -1.
+729  return lastSeparator > extensionPos ? NOT_FOUND : extensionPos;
+730 }
+    public static int indexOfLastSeparator(final String filename) {
+701  if (filename == null) {
+702   return NOT_FOUND;
+703  }
+704  final int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
+705  final int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
+706  return Math.max(lastUnixPos, lastWindowsPos);
+    }
+\end{lstlisting}
+\vspace{3mm}
+\caption{\label{fig:junit} Code example for assertion coverage}
+\end{figure}
+
+\begin{comment}
+\begin{table}[h] 
+\centering 
+\tiny
+\caption{} 
+\label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} \\
+[-1.8ex]\hline \hline \\
+[-1.8ex] & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} \\
+[-1.8ex] & Count Model & Hurdle Model\\ 
+\hline \\
+[-1.8ex] assertion & 0.034$^{***}$(0.003) & 0.360$^{***}$(0.066)\\ 
+statement & 0.0003$^{***}$(0.0001) & 0.020$^{***}$(0.0040)\\ 
+all\_mutant & 0.002$^{***}$(0.00004) & $-$0.002(0.002)\\ 
+Constant & 3.478$^{***}$(0.015) & 2.204$^{***}$(0.098) \\ 
+\hline \\
+[-1.8ex] Observations && 11,245 \\ 
+Log Likelihood && $-$60,141.340 \\ 
+\hline \\
+[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\hline \\
+\end{tabular} 
+\end{table} 
+\end{comment}
+
+Since each individual assertion can check different numbers of
+statement, thus we further study the impact of assertion coverage on
+fault detection rate for each
+assertion. Figure~\ref{fig:assert_cover_assert} presents the scatter
+plot for the assertion coverage ({\em x axis}) and fault detection
+rates ({\em y-axis}) of each single assertion. In total, we have
+25,220 assertions analyzed. Note that the
+fault detection rate for each assertion is computed as the number of
+faults detected by the assertion to the number of all faults executed
+by the corresponding test enclosing the assertion. Surprisingly, from
+the figure, we can find that the correlation is very weak, and
+the absolute value of Pearson's $r$ is less than 0.1 for both linear and logarithmic
+correlation (Table~\ref{table:t_cor_ass_test}). Furthermore, the
+Kendall's $\tau$ results also show that assertion coverage cannot be
+used to compare the fault detection capabilities of different
+assertions ($\tau$=0.0128).
+
+The above finding surprised us. We looked into our evaluation
+projects, and found a potential reason to be that each single
+assertion is usually effective in checking only limited amount of
+cases, making more assertion coverage useless. For example, test class
+{\tt \Comment{org.apache.commons.io.}FilenameUtilsTestCase} from {\tt commons-io}
+contains multiple tests and we list assertions from test
+{\tt testIndexOfExtension} in Table~\ref{table:t_3} (detailed
+code shown in Figure~\ref{fig:junit}). These assertions are used for
+testing the functionality of {\tt indexOfExtension()} in class {\tt FilenameUtils}.
+The assertion coverage of these assertions are all 0.138, indicating
+that they check the same number of statements. However, they kill
+different number of mutants. In Table~\ref{table:t_3}, all the
+assertions except assertions 1 and 2 test exceptional input, and
+expect $-$1 as output, i.e., assertions 3-5 all has {\tt
+NOT\_FOUND}($-$1) as the expected output. Mutation faults may cause
+all kinds of internal changes, but some of those changes propagate to
+the end and change the return value into {\tt NOT\_FOUND}, which is
+also the expected output of the assertions testing exceptional cases.
+Therefore, in this situation, assertions testing exceptional cases
+tend to kill less faults than assertions testing normal cases even they have
+similar assertion coverage. 
+
+For a more specific example, let's consider assertions 1 and 3 for
+detecting the mutation fault $m$ generated by {\tt Negate Condition
+Mutator} at statement 729 (e.g., changing ``>'' into ``<'').  In
+assertion 1, variables {\tt extensionPos} and {\tt lastSeparator} are
+computed as 4 and -1 in method {\tt indexOfExtension}, respectively
+(Figure~\ref{fig:junit}). Statement 729 returns -1 under fault
+$m$. Therefore, $m$ can be detected by assertion 1.  In assertion 5,
+variables {\tt extensionPos} and {\tt lastSeparator} are both computed
+as -1 in {\tt indexOfExtension}. Therefore, statement 729 returns -1,
+which is expected by the assertion, even in case of fault $m$. In
+other words, assertion 5 cannot kill the mutant.  Therefore, the fault
+detection rates of assertions depend on not only the number of
+statements checked but also the propagation.  In practice, there are
+assertions checking normal inputs and assertions checking exceptional
+intputs. Each type of assertion check specific faults, so they need
+to be used together to achieve high test effectiveness. Even with the
+same assertion coverage, the assertions test effectiveness can be
+quite different. Higher assertion coverage does not necessarily
+indicate higher test effectiveness. But in the other higher levels,
+under the assumption that developer construct assertions with good
+reasons, higher assertion coverage at the test or project level
+usually suggests higher test effectiveness, because different
+assertions tend to complement each other at the test level and project
+level.
+
+
+\finding{{\bf Finding8: }At the assertion level, surprisingly, assertion coverage does not have
+ clear positive or negative correlation with the fault detection
+ capability of each assertion. This finding shows that improving the
+ assertion coverage of individual assertions may not be quite helpful
+ in fault detection. On the contrary, improving assertion coverage
+ (i.e., using complementary assertions within each test or project) at
+ the test or project level can be beneficial. }
+
+\Comment{\noindent
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape{\bf%
+Finding 5: In project level and test case level, the assertion
+coverage is positive correlated with test effectivenss. But in
+assertion level the cumulative assertion coverage is not positive
+correlated with the effectiveness. Each assertion's checking ability
+is limited.  }}}}
+
+
+
+\input{threats}
