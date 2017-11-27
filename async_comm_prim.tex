@@ -1,7 +1,105 @@
-\section{Asynchronous communication primitives}
+\section{Asynchronous Communication Primitives}
+
+The multidimensional algorithms use two important commnunication
+primitives: the reliable broadcast and the witness technique.
 
 \subsection{Reliable Broadcast}
-Reliable broadcase
-\subsection{Witness Technique}
-Witness Technique
 
+
+The reliable broadcast technique avoids the situation where Byzantine
+processes convey different contents to different processes in a single
+round of commnunication.  And the original paper is from Srikanth and 
+Toueg\cite{srikanth1987simulating} and Bracha\cite{bracha1987asynchronous}.
+
+The message sent by processes contains sender's identification. So 
+one message contains the sender ID, receiver ID and content. And the reilable
+broadcast technique has the following properties:
+
+\begin{itemize}
+
+    \item Non-faulty integrity: If a non-fauty processes p never reliably broadcasts one specific
+    message, no other non-faulty process will ever receive it
+
+    \item Non-faulty liveness: If a non-faulty process p does reliably broadcasts one message $m$, 
+    all other non-faulty processes eventually receive message m
+
+    \item Global uniqueness: If two non-faulty processes reliably receive message $m$ and $m\prime$,
+    the messages are equal, even when the sender p is Byzantine.
+    
+    \item For two non-faulty processes $p_1$ and $p_2$, if $p_1$ reliably receive $m$, $p_2$ also
+    reliably receive $m$, even when the sender p is Byzantine.
+\end{itemize}
+
+The algorithms are following:
+
+\begin{algorithm}
+\caption{$p$.RBSend(($p,r,c$))}
+send($p, r, c$) to all processes
+
+\end{algorithm}
+
+\begin{algorithm}
+\caption{$p$.RBEcho()}
+\begin{algorithmic}
+
+    \State upon recv($q, r, c$) from q do
+    \If{never sent ($p, qr\{echo\}$, .)}
+        \State send($(p, qr\{echo\})$, $c$) to all processes
+    \EndIf
+
+    \\
+    \State upon recv(., qr\{echo\}, c) from $>= n - f$ processes do
+    \If{never sent ($p, qr\{ready\}$, .)}
+        \State send($(p, qr\{ready\})$, $c$) to all processes
+    \EndIf
+    \\
+
+    \State upon recv(., qr\{ready\}, c) from $>= f + 1$ processes do
+    \If{never sent ($p, qr\{ready\}$, .)}
+        \State send($(p, qr\{ready\})$, $c$) to all processes
+    \EndIf
+    
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{$p$.RBRecv(($q,r,c$))}
+    recv(., qr\{ready\}, c) from $n - f$ processes
+
+    return $(q, r, c)$
+
+\end{algorithm}
+
+\subsection{Witness Technique}
+The witness technique provide a method which can make two non-faulty processes
+get suitable overlaps values. This method is originally introduced by Abraham\cite{abraham2004optimal}.
+The method can make sure that non-faulty processes have $n - f$ common values, which is 
+essential for our correctness and optimality arguments. This witness technique will only
+wait for messages certain to be delivered.
+
+The algorithms are shown:
+
+\begin{algorithm}
+\caption{$p$.RBReceiveWitness($r$)}
+\begin{algorithmic}
+
+    \State $Val, Rep, Wit \leftarrow \phi$
+    \While {$|Val| < n - f$}
+        \State upon RBRecv(($p_{x} , r, c_{x}$)) do
+
+        \hspace{1cm}  $Val \leftarrow Val \cup\{(p_{x}, r, c_{x})\}$
+    \EndWhile
+    \State RBSend(($p, r, Val$))
+    \While {$|Wit| < n - f$} 
+        \State upon RBRecv(($p_{x} , r, c_{x}$)) do
+
+        \hspace{1cm}  $Val \leftarrow Val \cup\{(p_{x}, r, c_{x})\}$
+        \State upon RBRecv(($p_{x} , r, Val_{x}$)) do
+
+        \hspace{1cm}  $Rep \leftarrow Rep \cup\{(p_{x}, r, Val_{x})\}$
+        \State $Wit \leftarrow \{(p_{x}, r, Val_{x}) \in Rep: Val_{x} \subseteq Val\}$
+    \EndWhile
+    return $Val$
+    
+\end{algorithmic}
+\end{algorithm}

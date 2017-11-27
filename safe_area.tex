@@ -1,6 +1,32 @@
-\section{Safe Area}
+\section{The Safe Area}
+In the multidimensional algorithms, non-faulty processes exchange messages
+containing vectors. Each process in the system will exchange their vectors
+in each round. And then they will compute one result just in the safe area.
+The safe area is convex hull of the all the input vectors\cite{perles2007generalization}.
 
-\subsection{Introduction}
-Introduction to safe area.
-\subsection{Algorithms}
-Algorithms.
+We can consider to use the linear algorithm to compute the safe area.
+The goal is to find a vector $w$ that could be expressed as a convex conbination
+of vectors in $C\prime$ for all choices $C\prime \in C$ such that $|C\prime| = n - f$. 
+The linear program uses the $d + \binom{n}{n - f}(n - f)$ variables described below:
+
+
+-- $w_1, ..., w_{d}$: variables for $w_{i}$-th element of vector $w$, $1 <= i <= d$.
+
+-- $\alpha_{C\prime, i}$: coefficients multiplying vectors of $C\prime$ that express $w$
+as their convex combination. We include here only those $n - f$ indexes $i$ for which $v_{i} \in C\prime$.
+
+For every $C\prime$, the linear constraints are as follows.
+
+-- $w = \Sigma_{v_{i} \in C\prime}\alpha_{C\prime, i} \cdot v_{i}$ (i.e., $w$ is a linear combination of vectors in $C\prime$)
+
+-- $\Sigma_{v_{i} \in C\prime}\alpha_{C\prime, i} = 1$(i.e., the sum of all coefficients for a particular $C\prime is 1$)
+
+-- $\alpha_{C\prime, i} >= 0$ for all $v_{i} \in C\prime$ (i.e., all coefficients are nonnegative).
+
+For all every $C\prime$, we get $d + 1 + n - f$ linear constraints, yielding a total of 
+$\binom{n}{n - f}(d + 1 + n - f)$ constraints in $d + \binom{n}{n - f}(n - f)$ variables. 
+Hence, for any fixed $f$, the vector $w$ can be found in ploynomial time by linear program
+with the number of variables and constraints that are polynomial in n and d (but not in f).
+However, when f grows with n, the computational compulexity is high. Observe that we are
+interested in any feasible vector $w$ that satisfies the above linear constaints and any
+deterministic optimization objectives function can be used in the linear program.

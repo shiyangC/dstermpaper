@@ -1,5 +1,21 @@
 \begin{thebibliography}{1}
 
+\bibitem{abraham2004optimal}
+I.~Abraham, Y.~Amit, and D.~Dolev.
+\newblock Optimal resilience asynchronous approximate agreement.
+\newblock In {\em OPODIS}, pages 229--239. Springer, 2004.
+
+\bibitem{attiya2004distributed}
+H.~Attiya and J.~Welch.
+\newblock {\em Distributed computing: fundamentals, simulations, and advanced
+  topics}, volume~19.
+\newblock John Wiley \& Sons, 2004.
+
+\bibitem{bracha1987asynchronous}
+G.~Bracha.
+\newblock Asynchronous byzantine agreement protocols.
+\newblock {\em Information and Computation}, 75(2):130--143, 1987.
+
 \bibitem{fischer1985impossibility}
 M.~J. Fischer, N.~A. Lynch, and M.~S. Paterson.
 \newblock Impossibility of distributed consensus with one faulty process.
@@ -9,6 +25,17 @@ M.~J. Fischer, N.~A. Lynch, and M.~S. Paterson.
 H.~Mendes, M.~Herlihy, N.~Vaidya, and V.~K. Garg.
 \newblock Multidimensional agreement in byzantine systems.
 \newblock {\em Distributed Computing}, 28(6):423--441, 2015.
+
+\bibitem{perles2007generalization}
+M.~A. Perles and M.~Sigron.
+\newblock A generalization of tverberg's theorem.
+\newblock {\em arXiv preprint arXiv:0710.4668}, 2007.
+
+\bibitem{srikanth1987simulating}
+T.~Srikanth and S.~Toueg.
+\newblock Simulating authenticated broadcasts to derive simple fault-tolerant
+  algorithms.
+\newblock {\em Distributed Computing}, 2(2):80--94, 1987.
 
 \bibitem{vaidya2013byzantine}
 N.~H. Vaidya and V.~K. Garg.
