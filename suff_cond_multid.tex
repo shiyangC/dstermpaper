@@ -1,7 +1,105 @@
 \section{Sufficient Condition for Multidimensional Approximate Agreement}
 This paper introduces two different algorithms which are meant to resolve
-the multidimensional Byzantine problem. 
-\subsection{AAD}
-\subsection{MH}
+the multidimensional approximate agreement problem. Both of the algorithms
+were obtained by suitably modifiying Abraham's algorithm for approximate
+agreement over scalars, which called AAD algorithm\cite{abraham2004optimal}. 
+
+\subsection{The AAD Algorithm}
+In the AAD algorithm, each non-faulty process $p_{i}$ maintains a scalar
+variable $v_{i}$ that changes between multiple discrete rounds. The scalar
+value in process $p_{i}$ at the end of round $r$ is denoted by $v_{i}^{r}$.
+The input value of process $p_{i}$ is denoted by $v_{i}^{0}$. In each round,
+non-faulty processes\cite{mendes2015multidimensional}:
+
+1. Reliable broadcast the current value $v_{i}^{r-1}$;
+
+2. Using the witness technique , receiving $M$, a message set containing
+values from existing proecesses;
+
+3. Compute a new state $v_{i}^{r}$, based on Content($M$)
+
+\subsection{The Mendes-Herlihy Algorithm}
+Medes-Herlihy's algorithm will approximate agree over vectors,
+originally present in \cite{mendes2013multidimensional}. From the
+algorithm it seems that the algorithm compute dimension by dimension
+but each dimension do not compute independently. The algorithm using 
+another sub-procedure to compute the number of iterations. For each
+dimension, indexed by m, it execute a specific time to get convergence.
+The algorithm will converge after $accept > f$ halt messages,
+accumulated in $H$.
+
+The Mendes-Herlihy algorithm is:
+
+\begin{algorithm}
+\caption{$p$.AsyncAgreeMH($I$)}
+\begin{algorithmic}
+
+    \State $(R, v) \leftarrow CalculateRounds(I)$
+    \For{i} {1}... {d}
+        \State $H \leftarrow \phi$
+        \State $r \leftarrow 1$
+
+        \While {$|H| <= f$} 
+        \State RBSend(($p, m.r, v$))
+        \State upon $V \leftarrow RBReceiveWitness(m.r)$ do
+
+        \State \hspace{0.8cm} $S \leftarrow Safe_{f}(V)$
+
+        \State \hspace{0.65cm} $v \leftarrow v \in S$ such that $v[m] = Midpoint(S(m))$
+        \hspace{1cm} \If {$r = R$}
+        \hspace{1cm} \State RESend(($p, m.r, \{halt\}$))
+        \hspace{1cm} \EndIf
+
+        \hspace{0.8cm} $r \leftarrow r + 1$
+        \State upon RBRecv(($p\prime, m.r\prime, \{halt\}$)), with $r\prime >= r$ do
+
+        \hspace{1cm} $H \leftarrow H \cup \{(p\prime, m.r\prime, \{halt\})\}$
+        \EndWhile
+    \EndFor
+
+    \State return $v$
+\end{algorithmic}
+\end{algorithm}
+
+
 \subsection{VG}
 
+The sub-procedure of computing iteration times algorithm:
+
+\begin{algorithm}
+\caption{$p$.CalculateRounds($I$)}
+\begin{algorithmic}
+    \State RBSend(($p, 0, I$))
+    \State $(V, W) \leftarrow (Val, Content(Wit))$ from RBReceiveWitness(0)
+    \State $U \leftarrow$ \{barycenter of $Safe_{f}({W\prime})$: $W\prime \in W$\}
+    \State $v \leftarrow$ barycenter of $Safe_{f}(U)$
+    \State $R \leftarrow \left\lceil \log_2(\sqrt{d}/\epsilon \cdot max\{\delta_{U}(m):1 <= m <= d\})  \right\rceil$
+    \State return ($R, v$)
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{The Vaidya-Garg Algorithm}
+This algorithm works just like AAD algorithm. And it use simpler gemetric primitives.
+This algorithm is present in \cite{vaidya2013byzantine}. The algorithm is following\cite{mendes2015multidimensional}:
+
+\begin{algorithm}
+\caption{$p$.AsyncAgreeVG($I$)}
+\begin{algorithmic}
+
+    \State $R \leftarrow 1 + \left\lceil \log_{1/(1-\gamma)}\frac{\sqrt{d}(U - \nu)}{\epsilon} \right\rceil $
+    \For {i} {1}... {$R$}
+        \State RBSend(($p, r, v$))
+        \State upon $M \leftarrow$ RBReceiveWitness($r$) do
+
+        \hspace{0.2cm} for $M\prime \subseteq M, |M\prime| = n - f $ do
+
+        \hspace{0.4cm} $S_{M\prime} \leftarrow Safe_{f}(M\prime)$
+
+        \hspace{0.4cm} $Z \leftarrow Z \cup DeterministicallyChoosePoint(S_{M\prime})$
+
+        \hspace{0.2cm} $v \leftarrow (\Sigma_{z \in Z}z)/|Z|$
+    \EndFor
+
+    \State return $v$
+\end{algorithmic}
+\end{algorithm}

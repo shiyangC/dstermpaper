@@ -10,6 +10,13 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\renewcommand{\algorithmicforall}{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
 
 \begin{document}
 \title{Comparative Evaluation of Approximate Byzantine Vector Consensus Algorithms}
