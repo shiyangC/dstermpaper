@@ -1,6 +1,48 @@
-\section{Comparasion}
+\section{Comparison Evaluation}
+The MH algorithm and VG algorithm are both designed to solve
+multidimensional approximate agreement problems. But they use
+different methods to get the result. They get different properties
+and limitations, and specific application constraints. The HM
+algorithm depends on the barycenter of the safe area. The VG
+algorithm depends on upper bound and lower bound of the value.
+
+Research proposed that MH algorithm has a faster convergence rate.
+From the equations, it is hard to tell. The situations is the
+property are different, and it is hard to directly compare both
+of the algorithms. 
 
 \subsection{Time complexity}
-Time complexity.
+To compare these algorithms, we choose some value of the setup.
+And we use the different dimension as the x-axis to plot the 
+number of iterations. The y-axis is the number of iteration.
+
+I choose both $\epsilon$ as 0.5, I assume
+$U - v$ as 2, $\gamma$ is 0.5 to plot picture. The dimension is
+from 1 to 50. The maximun $\delta_{U}(m)$ is choosed by 1.
+
+\input{plot.tikz}
+
+From this plot, we can tell that VG algorithm need more iteration
+to get converge. And each iteration number is increasing as the 
+dimension increasing.
+
+When we choose the a different set of value, the maximun $\delta_{U}(m)$ is choosed by 2.
+Using $U - v$ as 4 and plot the number of convergences from
+dimension 1 to 50.
+
+\input{plot_1.tikz}
+
+From this plot we can tell that these two figure is similar, so we 
+want to reduce the value of $\gamma$ to 0.1. The plot is following.
+
+\input{plot_2.tikz}
+
+From this plot we can tell that when $\gamma$ goes to 0, the iteration
+of VG algorithm will decrease dramaticlly.
+
+\input{plot_3.tikz}
+
+From this plot we can see that when $U - v$ is growing, the iteration
+time will keep increasing. 
+
 \subsection{Running Time}
-Running time.
