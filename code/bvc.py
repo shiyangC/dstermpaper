@@ -14,7 +14,7 @@ def RbSend(p, r, v):
     return
 
 def RbReceiveWitness(points, f): #produces n - f good points and f bad points with random values
-    badPoint = lambda:tuple([round(random.uniform(-1,1),2) for i in range(len(points[0]))])
+    badPoint = lambda:tuple([round(1.5 * random.uniform(-1,1),2) for i in range(len(points[0]))])
     #np = points[:]
     #np[:-f] = [badPoint() for x in range(f)]
     badPoints = [badPoint() for x in range(f)]
@@ -28,10 +28,10 @@ def RbReceiveWitness(points, f): #produces n - f good points and f bad points wi
 
 def BVC_MH(goodPts, f):
     plotPoly(Polygon(goodPts), color='black', linewidth=2)
-    plotPoly(CalculateSafeArea(goodPts,1), color='blue', linewidth=2)
+    plotPoly(CalculateSafeArea(goodPts,f), color='blue', linewidth=2)
     colors = 'rcygbkp'
 
-    R = CalculateMhRound()
+    R = 2 #CalculateMhRound()
 
     n = len(goodPts) + f
     rounds = [[(0, 0)] * n] * (R + 1)
@@ -60,13 +60,13 @@ def BVC_MH(goodPts, f):
                     # can deduct some of H to simulate delayed received halt msgs?
 
     for round in rounds:
-        plotPoly(ptsToHull(round), color=colors[r], linewidth=1)
+        plotPoly(ptsToHull(round), color='blue', linewidth=1)
     return rounds
 
 def MH_DeterministicallyChoosePoint(safeAreaPgon, dim):
-    if safeAreaPgon.geom_type == "LineString":
-        x,y = safeAreaPgon.centroid.xy
-        return [x,y]
+#    if safeAreaPgon.geom_type == "LineString":
+#        x,y = safeAreaPgon.centroid.xy
+#        return [x,y]
     points = polyToPts(safeAreaPgon)
     points.sort(key=lambda p:p[dim])
     midpoint = points[len(points)/2]
@@ -74,10 +74,11 @@ def MH_DeterministicallyChoosePoint(safeAreaPgon, dim):
 
 def BVC_VG(goodPts, f):
     plotPoly(Polygon(goodPts), color='black', linewidth=2)
-    plotPoly(CalculateSafeArea(goodPts,1), color='blue', linewidth=2)
+    plotPoly(CalculateSafeArea(goodPts,f), color='blue', linewidth=2)
     colors = 'rcygbkp'
     rounds = []
     rounds.append(RbReceiveWitness(goodPts, f))
+    plotPoly(ptsToHull(rounds[0]), linewidth=1)
     R = CalculateVgRound()
     for r in range(R):
         newPts = []
@@ -92,7 +93,10 @@ def BVC_VG(goodPts, f):
 def VG_Round(points, f):
     z = []
     k = len(points) - f
-    for subset in combinations(points, k):
+    sets = list(combinations(points, k))
+    random.shuffle(sets)
+    sets = sets[:len(points)]
+    for subset in sets:
         safe = CalculateSafeArea(subset, f)
         z.append(VG_DeterministicallyChoosePoint(safe))
     v = VG_avgPoints(z)
@@ -122,7 +126,7 @@ def CalculateSafeArea(points, f):
     k = len(points) - f
     area = MultiPoint(points).convex_hull
     for subset in combinations(points, k):
-        print subset
+        #print subset
         subarea = MultiPoint(subset).convex_hull
         area = area.intersection(subarea)
     return area
@@ -137,7 +141,9 @@ def polyToPts(poly):
     try:
         x,y = poly.exterior.xy
     except:
-        a = 1+1
+        x = [poly.bounds[0], poly.bounds[2]]
+        y = [poly.bounds[1], poly.bounds[3]]
+
     l = zip(x,y)
     q = set()
     r = []
@@ -181,13 +187,15 @@ if __name__ == "__main__":
     # print RbReceiveWitness(points, 1)
     # print RbReceiveWitness(points, 2)
 
-    points = [[round(cos(t),2), round(sin(t),2)] for t in [t * 2 * pi / 5.0 for t in range(5)]]
+    n = 7
+    f = 2
+    points = [[round(cos(t),2), round(sin(t),2)] for t in [t * 2 * pi / n for t in range(n)]]
 #    print points
 #    print CalculateSafeArea(points, 1)
 
     print 'result'
-#    bvc_result = BVC_VG(points, 1)
-    bvc_result = BVC_MH(points, 1)
+    bvc_result = BVC_VG(points, f)
+#    bvc_result = BVC_MH(points, 1)
 
     plt.axes().set_aspect(1)
     plt.show()
