@@ -18,9 +18,13 @@ number of iterations. The y-axis is the number of iteration.
 
 I choose both $\epsilon$ as 0.5, I assume
 $U - v$ as 2, $\gamma$ is 0.5 to plot picture. The dimension is
-from 1 to 50. The maximun $\delta_{U}(m)$ is choosed by 1.
+from 1 to 50. The maximun $\delta_{U}(m)$ is choosed by 1 shown
+in fig-\ref{fig:M1}.
 
+\begin{figure}
 \input{plot.tikz}
+\caption{Rounds of Iteration} \label{fig:M1}
+\end{figure}
 
 From this plot, we can tell that VG algorithm need more iteration
 to get converge. And each iteration number is increasing as the 
@@ -28,21 +32,65 @@ dimension increasing.
 
 When we choose the a different set of value, the maximun $\delta_{U}(m)$ is choosed by 2.
 Using $U - v$ as 4 and plot the number of convergences from
-dimension 1 to 50.
+dimension 1 to 50 shown in fig-\ref{fig:M2}.
 
+\begin{figure}
 \input{plot_1.tikz}
+\caption{Round of Iteration} \label{fig:M2}
+\end{figure}
 
 From this plot we can tell that these two figure is similar, so we 
-want to reduce the value of $\gamma$ to 0.1. The plot is following.
+want to reduce the value of $\gamma$ to 0.1. The plot is following shown
+in fig-\ref{fig:M3}.
 
+\begin{figure}
 \input{plot_2.tikz}
+\caption{Round of Iteration} \label{fig:M3}
+\end{figure}
 
 From this plot we can tell that when $\gamma$ goes to 0, the iteration
-of VG algorithm will decrease dramaticlly.
+of VG algorithm will decrease dramaticlly shown in fig\ref{fig:M4}. We
+try to plot the Vaidya-Garg algorithm using a small value which is 0.001.
+The $\gamma$ is typically will be a relative small number. We can see
+that, when the dimension is increasing, the convergence will become slow.
 
+\begin{figure}
 \input{plot_3.tikz}
+\caption{Round of Iteration} \label{fig:M4}
+\end{figure}
 
 From this plot we can see that when $U - v$ is growing, the iteration
 time will keep increasing. 
 
-\subsection{Running Time}
+
+In figure \ref{fig:M5}, the system consists of five non-faulty processes and one 
+faulty process. Originally the non-faulty processes decided on coordinates 
+arranged in a pentagon shape. The faulty process, however, has a 
+random point outside of the pentagon. The goal of the algorithm is 
+to have the non-faulty processes agree on a point inside the safe area,
+denoted by the marked inner pentagon on the graph. Throughout each 
+iteration, even though the faulty process produces faulty value that 
+caused the consensus to diverge, the diveged consensus values are 
+then used as the input to the next iterations (the convex hull of 
+each iteration is denoted with a roman numeral). We notice that the 
+consensus areas proceed to a small point-like area, inside the original 
+safe area.
+
+\begin{figure}
+\includegraphics[scale=0.5]{p1}
+
+\caption{Safe Area} \label{fig:M5}
+\end{figure}
+
+In figure \ref{fig:M6}, the system consists of seven non-faulty processes and 
+two faulty processes. On faulty point is visible outside of the 
+region marked by the non-faulty processes arranged in a 7-sided 
+polygon. Another faulty point is not visible, inside the convex 
+hull of the non-faulty processes. The safe area of the $n=9, f=2$ 
+configuration is much smaller, but the non-faulty processes still 
+manage to converge into the safe area after several iterations.
+
+\begin{figure}
+\includegraphics[scale=0.5]{p2}
+\caption{Safe Area} \label{fig:M6}
+\end{figure}

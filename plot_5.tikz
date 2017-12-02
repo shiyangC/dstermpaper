@@ -1,0 +1,128 @@
+% This file was created by matplotlib2tikz v0.6.14.
+\begin{tikzpicture}
+
+\definecolor{color1}{rgb}{1,0.498039215686275,0.0549019607843137}
+\definecolor{color0}{rgb}{0.12156862745098,0.466666666666667,0.705882352941177}
+
+\begin{axis}[
+xmin=-1.4, xmax=51.4,
+ymin=-1660.85, ymax=34987.85,
+tick align=outside,
+tick pos=left,
+x grid style={lightgray!92.026143790849673!black},
+y grid style={lightgray!92.026143790849673!black},
+legend entries={{MH},{VG}},
+legend cell align={left},
+legend style={at={(0.03,0.97)}, anchor=north west, draw=white!80.0!black}
+]
+\addlegendimage{no markers, color0}
+\addlegendimage{no markers, color1}
+\addplot [semithick, color0]
+table {%
+0 -inf
+1 5
+2 5
+3 6
+4 6
+5 6
+6 6
+7 6
+8 6
+9 6
+10 6
+11 7
+12 7
+13 7
+14 7
+15 7
+16 7
+17 7
+18 7
+19 7
+20 7
+21 7
+22 7
+23 7
+24 7
+25 7
+26 7
+27 7
+28 7
+29 7
+30 7
+31 7
+32 7
+33 7
+34 7
+35 7
+36 7
+37 7
+38 7
+39 7
+40 7
+41 8
+42 8
+43 8
+44 8
+45 8
+46 8
+47 8
+48 8
+49 8
+};
+\addplot [semithick, color1]
+table {%
+0 -inf
+1 13864
+2 17329
+3 19357
+4 20795
+5 21911
+6 22822
+7 23593
+8 24260
+9 24849
+10 25376
+11 25853
+12 26288
+13 26688
+14 27058
+15 27403
+16 27726
+17 28029
+18 28315
+19 28585
+20 28842
+21 29086
+22 29318
+23 29540
+24 29753
+25 29957
+26 30153
+27 30342
+28 30524
+29 30699
+30 30869
+31 31033
+32 31192
+33 31345
+34 31495
+35 31640
+36 31780
+37 31917
+38 32051
+39 32181
+40 32307
+41 32431
+42 32551
+43 32669
+44 32784
+45 32896
+46 33006
+47 33114
+48 33219
+49 33322
+};
+\end{axis}
+
+\end{tikzpicture}
