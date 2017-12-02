@@ -138,11 +138,11 @@ def pcontains(points, point):
 def ptsToPoly(points):
     return Polygon(points)
 def polyToPts(poly):
-    try:
-        x,y = poly.exterior.xy
-    except:
-        x = [poly.bounds[0], poly.bounds[2]]
-        y = [poly.bounds[1], poly.bounds[3]]
+ #   try:
+    x,y = poly.exterior.xy
+#    except:
+#        x = [poly.bounds[0], poly.bounds[2]]
+#        y = [poly.bounds[1], poly.bounds[3]]
 
     l = zip(x,y)
     q = set()
@@ -195,7 +195,7 @@ if __name__ == "__main__":
 
     print 'result'
     bvc_result = BVC_VG(points, f)
-#    bvc_result = BVC_MH(points, 1)
+#    bvc_result = BVC_MH(points, f) #breaks
 
     plt.axes().set_aspect(1)
     plt.show()
